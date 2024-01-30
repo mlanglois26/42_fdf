@@ -6,11 +6,13 @@
 /*   By: malanglo <malanglo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 12:55:56 by malanglo          #+#    #+#             */
-/*   Updated: 2024/01/30 12:56:13 by malanglo         ###   ########.fr       */
+/*   Updated: 2024/01/30 14:54:25 by malanglo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_strlen(const char *s)
+#include "../../includes/fdf.h"
+
+size_t	ft_strlen(const char *s)
 {
 	int	i;
 

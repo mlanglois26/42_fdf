@@ -6,9 +6,11 @@
 /*   By: malanglo <malanglo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 12:47:25 by malanglo          #+#    #+#             */
-/*   Updated: 2024/01/30 12:47:50 by malanglo         ###   ########.fr       */
+/*   Updated: 2024/01/30 14:53:24 by malanglo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "../../includes/fdf.h"
 
 char	*ft_read_from_fd_and_concatenate_to_stash(int fd, char *stash)
 {

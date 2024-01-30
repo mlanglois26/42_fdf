@@ -6,9 +6,11 @@
 /*   By: malanglo <malanglo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 12:48:18 by malanglo          #+#    #+#             */
-/*   Updated: 2024/01/30 12:48:34 by malanglo         ###   ########.fr       */
+/*   Updated: 2024/01/30 14:53:29 by malanglo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "../../includes/fdf.h"
 
 char	*ft_strchr(const char *s, int c)
 {
