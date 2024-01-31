@@ -6,7 +6,7 @@
 /*   By: malanglo <malanglo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 13:10:40 by malanglo          #+#    #+#             */
-/*   Updated: 2024/01/30 14:56:39 by malanglo         ###   ########.fr       */
+/*   Updated: 2024/01/31 18:36:35 by malanglo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,27 @@ int ft_get_map_dimensions(char *file, int *height, int *width)
     close(fd);
     return (0);
 }
+
+// void ft_centre_map_on_screen(t_map *map)
+// {
+//     int j_axis;
+//     int i_axis;
+   
+//     j_axis = 0;
+//     while (j_axis < map->total_height)
+//     {
+//         i_axis = 0;
+//         while (i_axis < map->total_width)
+//         {
+//             printf("point AVANT nouvelle assoc x = %f | y = %f\n", map->point_index[j_axis *map->total_width + i_axis].x, map->point_index[j_axis *map->total_width + i_axis].y);
+//             map->point_index[j_axis *map->total_width + i_axis].x +=  (WIN_WIDTH / 2);
+//             map->point_index[j_axis *map->total_width + i_axis].y += (WIN_HEIGHT / 2);
+//             printf("point APRES nouvelle assoc x = %f | y = %f\n", map->point_index[j_axis *map->total_width + i_axis].x, map->point_index[j_axis *map->total_width + i_axis].y);
+//             i_axis++;
+//         }
+//         j_axis++;
+//     }
+// }
 
 t_map *read_map(char *file)
 {

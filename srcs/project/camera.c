@@ -1,37 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   maths_utils.c                                      :+:      :+:    :+:   */
+/*   cam.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: malanglo <malanglo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/30 13:21:49 by malanglo          #+#    #+#             */
-/*   Updated: 2024/01/31 09:32:17 by malanglo         ###   ########.fr       */
+/*   Created: 2024/01/31 14:19:58 by malanglo          #+#    #+#             */
+/*   Updated: 2024/01/31 14:20:20 by malanglo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/fdf.h"
 
-float	ft_abs(float n)
+void ft_apply_zoom(t_point *point, float zoom) 
 {
-	if (n < 0)
-		return (-n);
-	else
-		return (n);
+    point->x *= zoom;
+    point->y *= zoom;
 }
 
-float	ft_max(float a, float b)
+void ft_apply_offset(t_point *point, int x_offset, int y_offset) 
 {
-	if (a > b)
-		return (a);
-	else
-		return (b);
+    point->x -= x_offset;
+    point->y -= y_offset;
 }
 
-float	ft_min(float a, float b)
+void ft_apply_x_offset(t_point *point, int x_offset) 
 {
-	if (a < b)
-		return (a);
-	else
-		return (b);
+    point->x += x_offset;
+}
+
+void ft_apply_y_offset(t_point *point, int y_offset) 
+{
+    point->y += y_offset;
 }

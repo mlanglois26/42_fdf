@@ -6,7 +6,7 @@
 #    By: malanglo <malanglo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/30 12:41:59 by malanglo          #+#    #+#              #
-#    Updated: 2024/01/30 17:58:22 by malanglo         ###   ########.fr        #
+#    Updated: 2024/01/31 14:22:11 by malanglo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,6 +37,8 @@ SRCS = 			srcs/utils/ft_atoi.c\
 				srcs/project/maths_utils.c\
 				srcs/project/transform.c\
 				srcs/project/key_hook.c\
+				srcs/project/menu.c\
+				srcs/project/camera.c\
 				srcs/project/main.c\
 
 OBJS =		$(SRCS:.c=.o)

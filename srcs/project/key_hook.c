@@ -6,59 +6,50 @@
 /*   By: malanglo <malanglo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 15:49:54 by malanglo          #+#    #+#             */
-/*   Updated: 2024/01/30 17:41:03 by malanglo         ###   ########.fr       */
+/*   Updated: 2024/01/31 19:29:34 by malanglo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/fdf.h"
 
-// int close_cross_window(void)
+int	close_cross_window(void)
+{
+	exit(0);
+	return (0);
+}
+
+int	key_scale(int key, t_mlx *mlx)
+{
+	mlx_clear_window(mlx->mlx_ptr, mlx->mlx_win_ptr);
+	if (key == XK_equal)
+		mlx->cam->zoom += 10;
+	else if (key == XK_minus)
+		mlx->cam->zoom -= 10;
+	else if (key == XK_r)
+		mlx->cam->x_offset += 10;
+	else if (key == XK_d)
+		mlx->cam->y_offset += 10;
+	else if (key == XK_l)
+		mlx->cam->x_offset -= 10;
+	else if (key == XK_u)
+		mlx->cam->y_offset -= 10;
+	else if (key == XK_g && mlx->cam->z_increase < 1)
+		mlx->cam->z_increase += 0.5;
+	else if (key == XK_f && mlx->cam->z_increase > -1)
+		mlx->cam->z_increase -= 0.5;
+	else if (key == XK_Escape)
+		exit(0);
+	ft_join_points(&mlx);
+	return (0);
+}
+
+
+// void change_window_size(int key, t_mlx *fdf)
 // {
-//     exit(0);
-//     return (0);
+// 	if (key ==)
 // }
 
-// void	my_pixel_put(t_image *img, int x, int y, int color)
-// {
-// 	int	offset;
-
-// 	offset = (img->line_length * y) + (x * (img->bpp / 8));
-// 	*((unsigned int *)(offset + img->addr)) = color;
-// }
-
-// void color_screen(t_mlx *data, int color)
-// {
-//     int y;
-//     int x;
-
-//     y = 0;
-    
-//     while (y < WIN_HEIGHT)
-//     {
-//         x = 0;
-//         while (x < WIN_WIDTH)
-//         {
-//             my_pixel_put(data->image, x, y, color);
-//             ++x;
-//         }
-//         ++y;
-//     }
-// }
-
-// int escape(int key, t_mlx *mlx)
-// {
-//     if (key == XK_Escape)
-//         exit (0);
-//     else if (key == XK_r)
-//     {
-//         color_screen(mlx, 0xffffff);
-//     }
-//     mlx_put_image_to_window(mlx->mlx_ptr, mlx->mlx_win_ptr, mlx->image->img_ptr, 0, 0);
-//     return (0);
-// }
-
-// void hooks_handler(t_mlx *mlx)
-// {
-//     mlx_key_hook(mlx->mlx_win_ptr, escape, &mlx);
-//     mlx_hook(mlx->mlx_win_ptr, 17, 0, close_cross_window, mlx);
-// }
+void	hooks_handler(t_mlx *mlx)
+{
+	mlx_hook(mlx->mlx_win_ptr, 17, 0, close_cross_window, mlx);
+}
