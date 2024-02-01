@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cam.c                                              :+:      :+:    :+:   */
+/*   camera.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: malanglo <malanglo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/31 14:19:58 by malanglo          #+#    #+#             */
-/*   Updated: 2024/01/31 14:20:20 by malanglo         ###   ########.fr       */
+/*   Updated: 2024/02/01 12:45:14 by malanglo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,10 @@ void ft_apply_x_offset(t_point *point, int x_offset)
 void ft_apply_y_offset(t_point *point, int y_offset) 
 {
     point->y += y_offset;
+}
+
+
+void ft_z_increase(t_point *point, float z)
+{
+    point->z *= z;
 }

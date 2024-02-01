@@ -6,7 +6,7 @@
 /*   By: malanglo <malanglo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/30 13:15:42 by malanglo          #+#    #+#             */
-/*   Updated: 2024/01/31 19:26:48 by malanglo         ###   ########.fr       */
+/*   Updated: 2024/02/01 18:48:23 by malanglo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,6 +51,7 @@ t_map *ft_init_map(void)
     map->point_index = NULL;
     map->total_width = 0;
     map->total_height = 0;
+    map->max_z = 0;
     return (map);
 }
 
@@ -102,9 +103,25 @@ t_cam *ft_init_cam(void)
     cam = malloc(sizeof(t_cam));
     if (!cam)
         return (NULL);
-    cam->zoom = 0;
-    cam->x_offset = WIN_WIDTH / 2;
-    cam->y_offset = WIN_HEIGHT / 2;
+    cam->zoom = 30;
+    cam->x_offset = 0;
+    cam->y_offset = 0;
     cam->z_increase = 1;
     return (cam);    
 }
+
+t_line *ft_init_line(t_point start, t_point end)
+{
+    t_line *line;
+
+    line = malloc(sizeof(t_line));
+    line->start.x = start.x;
+    line->start.y = start.y;
+    line->start.z = start.z;
+    line->start.color = start.color;
+    line->end.x = end.x;
+    line->end.y = end.y;
+    line->end.color = end.color;
+    return (line);
+}
+
