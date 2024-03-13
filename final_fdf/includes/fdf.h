@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: malanglo <malanglo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/30 12:44:15 by malanglo          #+#    #+#             */
-/*   Updated: 2024/03/08 10:04:19 by malanglo         ###   ########.fr       */
+/*   Created: 2024/03/11 15:25:13 by malanglo          #+#    #+#             */
+/*   Updated: 2024/03/13 17:48:13 by malanglo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,11 +28,10 @@
 #  define BUFFER_SIZE 1024
 # endif
 
-# define WIN_WIDTH 1920
-# define WIN_HEIGHT 1080
+# define WIN_WIDTH 2500
+# define WIN_HEIGHT 1200
 # define ANGLE 0.7
 # define MENU 400
-# define MLX_ERROR 1
 
 typedef struct s_point
 {
@@ -47,39 +46,15 @@ typedef struct s_map
 	int		total_width;
 	int		total_height;
 	t_point	*point_index;
-	double		max_z;
-	double		min_z;
+	double	max_z;
+	double	min_z;
 }			t_map;
-
-typedef struct s_cam
-{
-	float	zoom;
-	float	x_offset;
-	float	y_offset;
-	float	z_increase;
-	int		color_pallet;
-}			t_cam;
 
 typedef struct s_line
 {
 	t_point	start;
 	t_point	end;
 }			t_line;
-
-typedef struct s_color
-{
-	int		start_color;
-	int		start_r;
-	int		start_g;
-	int		start_b;
-	int		end_color;
-	int		end_r;
-	int		end_g;
-	int		end_b;
-	int		delta_r;
-	int		delta_g;
-	int		delta_b;
-}			t_color;
 
 typedef struct s_image
 {
@@ -88,21 +63,30 @@ typedef struct s_image
 	int		bpp;
 	int		line_length;
 	int		endian;
-	t_line	*line;
 }			t_image;
 
-typedef struct s_mlx
+typedef struct s_cam
+{
+	float	zoom;
+	float	x_offset;
+	float	y_offset;
+	float	z_increase;
+}			t_cam;
+
+typedef struct s_fdf
 {
 	void	*mlx_ptr;
 	void	*mlx_win_ptr;
 	t_map	*map;
 	t_image	*image;
 	t_cam	*cam;
-}			t_mlx;
+}			t_fdf;
+
+/* utils */
 
 size_t		ft_strlen(const char *s);
 int			ft_atoi(const char *nptr);
-char		*ft_strchr(const char *s, int c);
+char		*ft_strchr(char *s, int c);
 char		*ft_strdup(const char *s);
 char		*ft_strjoin(char const *s1, char const *s2);
 char		*ft_substr(char const *s, unsigned int start, size_t len);
@@ -110,37 +94,60 @@ char		*get_next_line(int fd);
 char		**ft_strsplit(char const *s, char c);
 int			ft_atoi_base(const char *str, int str_base);
 
+/* maths */
+
 float		ft_abs(float n);
 float		ft_max(float a, float b);
 float		ft_min(float a, float b);
 
-t_mlx		*init_fdf(char *file);
+/* initialisation */
+
+t_fdf		*init_fdf(char *file);
 t_map		*ft_init_map(void);
 t_point		*ft_init_point_index(int total_height, int total_width);
-t_image		*ft_init_image(void);
-t_cam		*ft_init_cam(void);
-t_line		*ft_init_line(t_point start, t_point end);
 
-void		ft_fill_2D_map(char *file, t_map *map);
+t_image		*ft_image_data(t_fdf *fdf);
+
+/* fill struct */
+
+void		ft_render_map(t_fdf *fdf);
+void		ft_render_line(t_fdf *fdf, t_point start, t_point end);
+void		ft_iso_transform(t_point *point, float angle);
+void		ft_algo_bres(t_point start, t_point end, t_fdf *fdf);
+void		my_pixel_put(t_fdf *fdf, int x, int y, int color);
 int			ft_count_words(char const *s, char c);
 
-void		ft_join_points(t_mlx **data);
-t_map		*read_map(char *file);
+t_map		*fill_map_struct(char *file);
+void		ft_get_points_data(char *file, t_map *map);
+int			ft_get_map_dimensions(char *file, int *height, int *width);
+int			ft_get_color(char *line, int i_axis);
+int			ft_get_z(char *line, int i_axis);
 
-void		hooks_handler(t_mlx *mlx);
-int			key_scale(int key, t_mlx *mlx);
-void		ft_print_menu(t_mlx *fdf);
+/* end program */
 
-void		ft_apply_zoom(t_point *point, float zoom);
-void		ft_apply_offset(t_point *point, int x_offset, int y_offset);
-void		ft_apply_x_offset(t_point *point, int x_offset);
-void		ft_apply_y_offset(t_point *point, int y_offset);
-void		ft_z_increase(t_point *point, float z);
+int			cross_close_window(t_fdf *fdf);
+int			escape_close_window(int key, t_fdf *fdf);
 
-void		ft_render_map(t_mlx *fdf);
-void		ft_render_fdf(t_mlx *fdf);
+/* hooks */
 
-void		add_map_default_colors(t_map *map);
+void		hooks_handler(t_fdf *fdf);
+void		ft_set_cam_default(t_fdf *fdf);
+
+/* background & menu */
+
+void		project_background(t_fdf *fdf);
+void		project_menu(t_fdf *fdf);
+
+/* color */
+
 int			color(t_point start, t_point end);
+void		add_map_default_colors(t_map *map);
+
+/* point actions */
+
+void		ft_z_increase(t_point *point, float z);
+void		ft_apply_y_offset(t_point *point, int y_offset);
+void		ft_apply_x_offset(t_point *point, int x_offset);
+void		ft_apply_zoom(t_point *point, float zoom);
 
 #endif

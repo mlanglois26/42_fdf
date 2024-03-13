@@ -5,8 +5,8 @@
 #                                                     +:+ +:+         +:+      #
 #    By: malanglo <malanglo@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2024/01/30 12:41:59 by malanglo          #+#    #+#              #
-#    Updated: 2024/03/08 10:06:05 by malanglo         ###   ########.fr        #
+#    Created: 2024/03/11 15:23:29 by malanglo          #+#    #+#              #
+#    Updated: 2024/03/12 11:31:02 by malanglo         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,17 +31,15 @@ SRCS = 			srcs/utils/ft_atoi.c\
 				srcs/utils/ft_split.c\
 				srcs/utils/gnl.c\
 				srcs/utils/gnl_utils.c\
-				srcs/project/coordinates.c\
 				srcs/project/colors.c\
 				srcs/project/draw.c\
 				srcs/project/init_1.c\
-				srcs/project/init_2.c\
-				srcs/project/map.c\
-				srcs/project/maths_utils.c\
-				srcs/project/transform.c\
-				srcs/project/key_hook.c\
+				srcs/project/collect_map_data.c\
+				srcs/project/fill_map_struct.c\
+				srcs/project/utils.c\
+				srcs/project/hooks.c\
 				srcs/project/menu.c\
-				srcs/project/camera.c\
+				srcs/project/end_program.c\
 				srcs/project/main.c\
 
 OBJS =		$(SRCS:.c=.o)
@@ -63,3 +61,5 @@ fclean:		clean
 re: fclean all
 
 .PHONY: all clean fclean re
+
+

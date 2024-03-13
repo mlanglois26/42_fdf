@@ -5,14 +5,31 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: malanglo <malanglo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/31 09:53:39 by malanglo          #+#    #+#             */
-/*   Updated: 2024/03/08 09:35:47 by malanglo         ###   ########.fr       */
+/*   Created: 2024/03/11 15:54:47 by malanglo          #+#    #+#             */
+/*   Updated: 2024/03/13 11:35:41 by malanglo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/fdf.h"
 
-void	ft_print_menu(t_mlx *fdf)
+void	project_background(t_fdf *fdf)
+{
+	int	*img;
+	int	i;
+
+	img = (int *)fdf->image->addr;
+	i = 0;
+	while (i < WIN_WIDTH * WIN_HEIGHT)
+	{
+		if (i % WIN_WIDTH < MENU)
+			img[i] = 0x23364c;
+		else
+			img[i] = 0x172432;
+		i++;
+	}
+}
+
+void	project_menu(t_fdf *fdf)
 {
 	int		y;
 	void	*mlx;

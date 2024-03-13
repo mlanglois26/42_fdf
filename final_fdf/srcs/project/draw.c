@@ -5,44 +5,19 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: malanglo <malanglo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/01/30 13:18:57 by malanglo          #+#    #+#             */
-/*   Updated: 2024/03/12 18:12:54 by malanglo         ###   ########.fr       */
+/*   Created: 2024/03/11 15:52:02 by malanglo          #+#    #+#             */
+/*   Updated: 2024/03/13 17:44:45 by malanglo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../includes/fdf.h"
 
-void	draw_background(t_mlx *fdf)
-{
-	int	*img;
-	int	i;
-
-	img = (int *)fdf->image->addr;
-	i = 0;
-	while (i < WIN_WIDTH * WIN_HEIGHT)
-	{
-		if (i % WIN_WIDTH < MENU)
-			img[i] = 0x23364c;
-		else
-			img[i] = 0x172432;
-		i++;
-	}
-}
-
-void	my_pixel_put(t_image *img, int x, int y, int color)
-{
-	int	offset;
-
-	offset = (img->line_length * y) + (x * (img->bpp / 8));
-	*((unsigned int *)(offset + img->addr)) = color;
-}
-
-void ft_algo_bres(t_point start, t_point end, t_mlx *data)
+void ft_algo_bres(t_point start, t_point end, t_fdf *fdf)
 {
 	float x_distance;
 	float y_distance;
 	int max;
-
+    
 	x_distance = end.x - start.x;
 	y_distance = end.y - start.y;
 
@@ -52,55 +27,63 @@ void ft_algo_bres(t_point start, t_point end, t_mlx *data)
 
     while ((int)(start.x - end.x) || (int)(start.y - end.y))
 	{
-		mlx_pixel_put(data->mlx_ptr, data->mlx_win_ptr, start.x, start.y, color(start, end));
-		start.x += x_distance;
+        // printf("start.x = %f\n", start.x);
+        // printf("end.x = %f\n", end.x);
+        // printf("start.y = %f\n", start.y);
+        // printf("end.y = %f\n", end.y);
+        
+        my_pixel_put(fdf, start.x, start.y, color(start, end));
+        start.x += x_distance;
 		start.y += y_distance;
+        
+        if (start.x > WIN_WIDTH || start.y > WIN_HEIGHT || start.y < 0 || start.x < 0)
+            break ;
 	} 
 }
 
-void ft_iso_transform(t_point *point, float angle, float map_center_x, float map_center_y) 
+void ft_iso_transform(t_point *point, float angle) 
 {
-    float original_x = point->x;
-    float original_y = point->y;
-
-    float new_x = (original_x - original_y) * cos(angle);
-    float new_y = (original_x + original_y) * sin(angle) - point->z;
-
-    point->x = new_x + map_center_x;
-    point->y = new_y + map_center_y;
+    float new_x;
+    float new_y;
+    
+    new_x = (point->x - point->y) * cos(angle);
+    new_y = (point->x + point->y) * sin(angle) - point->z;
+    
+    point->x = new_x;
+    point->y = new_y;  
 }
 
-void ft_render_line(t_mlx *fdf, t_point start, t_point end)
-{
-	ft_apply_zoom(&start, fdf->cam->zoom);
-    ft_apply_zoom(&end, fdf->cam->zoom);
 
+
+void ft_render_line(t_fdf *fdf, t_point start, t_point end)
+{
+    ft_z_increase(&start, fdf->cam->z_increase);
+    ft_z_increase(&end, fdf->cam->z_increase);
+    
+    ft_iso_transform(&start, ANGLE);
+    ft_iso_transform(&end, ANGLE);
+    
+    ft_apply_zoom(&start, fdf->cam->zoom);
+    ft_apply_zoom(&end, fdf->cam->zoom);
+    
     ft_apply_x_offset(&start, fdf->cam->x_offset);
     ft_apply_x_offset(&end, fdf->cam->x_offset);
 
     ft_apply_y_offset(&start, fdf->cam->y_offset);
     ft_apply_y_offset(&end, fdf->cam->y_offset);
-    
-    ft_z_increase(&start, fdf->cam->z_increase);
-    ft_z_increase(&end, fdf->cam->z_increase);
 
-	ft_iso_transform(&start, ANGLE, 0, 0);
-    ft_iso_transform(&end, ANGLE, 0, 0);
-
-    fdf->image->line = ft_init_line(start, end);
-
-    ft_algo_bres(fdf->image->line->start, fdf->image->line->end, fdf);
-    
-    free(fdf->image->line);
+	ft_algo_bres(start, end, fdf);
 }
 
 
-void ft_render_map(t_mlx *fdf)
+
+void ft_render_map(t_fdf *fdf)
 {
     int j_axis;
     int i_axis;
     
-    draw_background(fdf);
+    
+    project_background(fdf);
     j_axis = 0;
     while (j_axis < fdf->map->total_height)
     {
@@ -117,5 +100,6 @@ void ft_render_map(t_mlx *fdf)
         }
         j_axis++;
     }
-    ft_print_menu(fdf);
+	mlx_put_image_to_window(fdf->mlx_ptr, fdf->mlx_win_ptr, fdf->image->img_ptr, 0, 0);
+    project_menu(fdf);
 }
