@@ -6,7 +6,7 @@
 /*   By: malanglo <malanglo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 15:32:22 by malanglo          #+#    #+#             */
-/*   Updated: 2024/03/21 10:55:05 by malanglo         ###   ########.fr       */
+/*   Updated: 2024/03/23 12:31:06 by malanglo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,6 +88,8 @@ int	ft_get_map_dimensions(char *file, int *height, int *width)
 	if (!line)
 		return (close(fd), -1);
 	*width = ft_count_words(line, ' ');
+	if (line[ft_strlen(line) - 2] == ' ' && line[ft_strlen(line) - 1] == '\n')
+		(*width)--;
 	*height = 1;
 	free(line);
 	while (1)
