@@ -6,7 +6,7 @@
 /*   By: malanglo <malanglo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 15:32:22 by malanglo          #+#    #+#             */
-/*   Updated: 2024/03/23 12:31:06 by malanglo         ###   ########.fr       */
+/*   Updated: 2024/03/25 09:20:18 by malanglo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,13 @@ int	ft_get_color(char *line, int i_axis)
 	if (comma_pos != NULL)
 	{
 		z_hexa = ft_strdup(comma_pos + 3);
+		if (!z_hexa)
+			return (0);
 		color = ft_atoi_base(z_hexa, 16);
 		free(z_hexa);
 	}
 	else
-	{
 		color = -1;
-	}
 	ft_free_split(num);
 	return (color);
 }

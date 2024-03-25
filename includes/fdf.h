@@ -6,7 +6,7 @@
 /*   By: malanglo <malanglo@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/11 15:25:13 by malanglo          #+#    #+#             */
-/*   Updated: 2024/03/22 16:44:18 by malanglo         ###   ########.fr       */
+/*   Updated: 2024/03/25 09:20:33 by malanglo         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@
 # include <unistd.h>
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 1024
+#  define BUFFER_SIZE 250000
 # endif
 
 # define WIN_WIDTH 1920
